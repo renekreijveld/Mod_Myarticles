@@ -11,9 +11,9 @@
 defined('_JEXEC') or die;
 ?>
 <ul class="mod-myarticles list-group">
-<?php foreach ($list as $article) : ?>
-    <li class="list-group-item">
-        <?php echo $article->title; ?>
-    </li>
-<?php endforeach; ?>
+    <?php foreach ( $list as $article ): ?>
+        <li class="list-group-item">
+            <?php echo $article->title; ?>
+        </li>
+    <?php endforeach; ?>
 </ul>

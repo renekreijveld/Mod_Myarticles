@@ -33,26 +33,26 @@ class MyarticlesHelper
      */
     public static function &getList(&$params)
     {
-        $db     = Factory::getContainer()->get('DatabaseDriver');
-        $user   = $user = Factory::getApplication()->getIdentity();
+        $db   = Factory::getContainer()->get('DatabaseDriver');
+        $user = $user = Factory::getApplication()->getIdentity();
 
         // Module parameters
         $articles = $params->get('articles', 5);
-        $ordering   = $params->get('ordering', 'title_a');
+        $ordering = $params->get('ordering', 'title_a');
 
         // Map ordering parameters to SQL queries
         $orderingMap = [
-            'title_a' => $db->quoteName('title') . ' ASC',
-            'title_d' => $db->quoteName('title') . ' DESC',
-            'created_a' => $db->quoteName('created') . ' ASC',
-            'created_d' => $db->quoteName('created') . ' DESC',
+            'title_a'    => $db->quoteName('title') . ' ASC',
+            'title_d'    => $db->quoteName('title') . ' DESC',
+            'created_a'  => $db->quoteName('created') . ' ASC',
+            'created_d'  => $db->quoteName('created') . ' DESC',
             'modified_a' => $db->quoteName('modified') . ' ASC',
             'modified_d' => $db->quoteName('modified') . ' DESC',
         ];
-        
+
         // Get articles
         $query = $db->getQuery(true)
-            ->select($db->quoteName(array('id','title')))
+            ->select($db->quoteName(array('id', 'title')))
             ->from($db->quoteName('#__content'))
             ->where($db->quoteName('created_by') . ' = :user_id')
             ->bind(':user_id', $user->id, ParameterType::INTEGER)
