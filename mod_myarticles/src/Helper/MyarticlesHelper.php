@@ -34,7 +34,7 @@ class MyarticlesHelper
     public static function &getList(&$params)
     {
         $db   = Factory::getContainer()->get('DatabaseDriver');
-        $user = $user = Factory::getApplication()->getIdentity();
+        $user = Factory::getApplication()->getIdentity();
 
         // Module parameters
         $articles = $params->get('articles', 5);
