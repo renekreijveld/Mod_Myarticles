@@ -12,8 +12,6 @@ namespace Joomla\Module\Myarticles\Site\Helper;
 
 use \Joomla\CMS\Factory;
 use \Joomla\Database\ParameterType;
-use \Joomla\CMS\HTML\HTMLHelper;
-use \Joomla\CMS\Language\Text;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
