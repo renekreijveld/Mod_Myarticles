@@ -40,32 +40,25 @@ class MyarticlesHelper
         $articles = $params->get('articles', 5);
         $ordering   = $params->get('ordering', 'title_a');
 
+        // Map ordering parameters to SQL queries
+        $orderingMap = [
+            'title_a' => $db->quoteName('title') . ' ASC',
+            'title_d' => $db->quoteName('title') . ' DESC',
+            'created_a' => $db->quoteName('created') . ' ASC',
+            'created_d' => $db->quoteName('created') . ' DESC',
+            'modified_a' => $db->quoteName('modified') . ' ASC',
+            'modified_d' => $db->quoteName('modified') . ' DESC',
+        ];
+        
         // Get articles
         $query = $db->getQuery(true)
             ->select($db->quoteName(array('id','title')))
             ->from($db->quoteName('#__content'))
             ->where($db->quoteName('created_by') . ' = :user_id')
-            ->bind(':user_id', $user->id, ParameterType::INTEGER);
-        switch ($ordering) {
-            case 'title_a':
-                $query->order($db->quoteName('title') . ' ASC');
-                break;            
-            case 'title_d':
-                $query->order($db->quoteName('title') . ' DESC');
-                break;            
-            case 'created_a':
-                $query->order($db->quoteName('created') . ' ASC');
-                break;            
-            case 'created_d':
-                $query->order($db->quoteName('created') . ' DESC');
-                break;            
-            case 'modified_a':
-                $query->order($db->quoteName('modified') . ' ASC');
-                break;            
-            case 'modified_d':
-                $query->order($db->quoteName('modified') . ' DESC');
-                break;            
-        }        
+            ->bind(':user_id', $user->id, ParameterType::INTEGER)
+            ->order($orderingMap[$ordering])
+            ->setLimit($articles);
+
         $query->setLimit($articles);
         $db->setQuery($query);
         $myArticles = $db->loadObjectList();
